@@ -38,4 +38,18 @@ public class DriverManager {
             throw new RuntimeException("Invalid Appium URL: " + config.get("appium.url"), e);
         }
     }
+
+    public static AndroidDriver getDriver() {
+        if (driver == null) {
+            throw new IllegalStateException("Driver not initialised — call initDriver() first");
+        }
+        return driver;
+    }
+
+    public static void quitDriver() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+        }
+    }
 }
