@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Miles Mobility Test Suite" verbose="1" thread-count="1">
+
+    <test name="Login Tests">
+        <classes>
+            <class name="com.miles.tests.LoginTest"/>
+        </classes>
+    </test>
+
+    <test name="Map Screen Tests">
+        <classes>
+
+        </classes>
+    </test>
+
+</suite>
