@@ -10,7 +10,7 @@
 
     <test name="Map Screen Tests">
         <classes>
-
+            <class name="com.miles.tests.MapScreenTest"/>
         </classes>
     </test>
 

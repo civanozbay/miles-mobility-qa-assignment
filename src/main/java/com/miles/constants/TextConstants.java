@@ -8,7 +8,14 @@ public final class TextConstants {
 
     // Login — Email screen
     public static final String LOGIN_EMAIL_WELCOME_HEADER = "LET’S GET YOU ON THE ROAD";
+
     // Login - Password screen
     public static final String LOGIN_PASSWORD_ACCOUNT_FOUND = "We found your account";
     public static final String LOGIN_PASSWORD_ERROR = "Sorry, something failed when logging in to MILES";
+
+    // Map — Help dialog
+    public static final String MAP_HELP_DIALOG_TITLE = "How can we help?";
+
+    // Filters
+    public static final String FILTERS_CAR_TYPE_VANS = "Vans";
 }
