@@ -12,6 +12,9 @@ public class MapPage extends BasePage{
     @AndroidFindBy(accessibility = "qa_button_fab_help")
     private WebElement helpButton;
 
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text=\"Help\"]")
+    private WebElement helpButtonLabel;
+
     @AndroidFindBy(accessibility = "qa_button_fab_filter")
     private WebElement filterButton;
 
@@ -40,6 +43,7 @@ public class MapPage extends BasePage{
 
     public WebElement getLeftMenuButton()    { return leftMenuButton; }
     public WebElement getHelpButton()        { return helpButton; }
+    public WebElement getHelpButtonLabel()   { return helpButtonLabel; }
     public WebElement getFilterButton()      { return filterButton; }
     public WebElement getVehicleListButton() { return vehicleListButton; }
     public WebElement getFindMeButton()      { return findMeButton; }

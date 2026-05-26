@@ -8,6 +8,7 @@ import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
@@ -27,6 +28,7 @@ public class DriverManager {
             appiumService = new AppiumServiceBuilder()
                     .withIPAddress(appiumUrl.getHost())
                     .usingPort(appiumUrl.getPort())
+                    .withLogFile(new File("target/appium.log"))
                     .build();
             appiumService.start();
             appiumService.clearOutPutStreams();

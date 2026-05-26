@@ -4,6 +4,7 @@ import com.miles.base.BaseTest;
 import com.miles.constants.TextConstants;
 import com.miles.driver.DriverManager;
 import com.miles.pages.FiltersPage;
+import com.miles.pages.LoginEmailPage;
 import com.miles.pages.MapPage;
 import com.miles.pages.VehicleListPage;
 import org.testng.Assert;
@@ -14,6 +15,7 @@ import org.testng.annotations.Test;
 public class MapScreenTest extends BaseTest {
 
     MapPage mapPage;
+
 
     @BeforeMethod
     public void setUp() {
@@ -32,12 +34,15 @@ public class MapScreenTest extends BaseTest {
     public void leftMenuButton() {
         assertIsDisplayed(mapPage.getLeftMenuButton());
         mapPage.tapLeftMenu();
+        LoginEmailPage loginEmailPage = new LoginEmailPage();
+        Assert.assertEquals(loginEmailPage.getText(loginEmailPage.getWelcomeHeader()),TextConstants.LOGIN_EMAIL_WELCOME_HEADER);
         assertAppIsRunning();
     }
 
     @Test
     public void helpButton() {
         assertIsDisplayed(mapPage.getHelpButton());
+        Assert.assertEquals(mapPage.getText(mapPage.getHelpButtonLabel()), TextConstants.MAP_HELP_BUTTON_LABEL);
         mapPage.tapHelp();
         Assert.assertEquals(mapPage.getText(mapPage.getHelpAlertDialog()), TextConstants.MAP_HELP_DIALOG_TITLE);
         assertAppIsRunning();
@@ -54,11 +59,21 @@ public class MapScreenTest extends BaseTest {
     }
 
     @Test
-    public void vehicleListButton() throws InterruptedException {
+    public void vehicleListButton() {
         assertIsDisplayed(mapPage.getVehicleListButton());
         mapPage.tapVehicleList();
         VehicleListPage vehicleListPage = new VehicleListPage();
-        Assert.assertTrue(vehicleListPage.getVehicleCount() > 0);
+        Assert.assertEquals(
+                vehicleListPage.getText(vehicleListPage.getVehiclesTitle()),
+                TextConstants.VEHICLE_LIST_TITLE);
+
+        if (vehicleListPage.getVehicleCount() > 0) {
+            Assert.assertTrue(vehicleListPage.getVehicleCount() > 0);
+        } else {
+            Assert.assertEquals(
+                    vehicleListPage.getText(vehicleListPage.getNoVehiclesPopupDescription()),
+                    TextConstants.VEHICLE_LIST_NO_CARS_DESCRIPTION);
+        }
         assertAppIsRunning();
     }
 
