@@ -81,6 +81,9 @@ public class MapScreenTest extends BaseTest {
     public void findMeButton() {
         assertIsDisplayed(mapPage.getFindMeButton());
         mapPage.tapFindMe();
+        assertIsDisplayed(mapPage.getGoogleMapView());
+        assertIsDisplayed(mapPage.getFilterButton());
+        assertIsDisplayed(mapPage.getVehicleListButton());
         assertAppIsRunning();
     }
 }

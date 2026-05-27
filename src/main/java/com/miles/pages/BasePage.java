@@ -32,8 +32,9 @@ public  abstract class BasePage {
     }
 
     public void type(WebElement element, String text) {
-        waitForVisible(element).clear();
-        waitForVisible(element).sendKeys(text);
+        WebElement el = waitForVisible(element);
+        el.clear();
+        el.sendKeys(text);
     }
 
     public String getText(WebElement element) {

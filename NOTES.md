@@ -15,7 +15,7 @@ Trade-offs, scope decisions, known flakiness, and what I'd change with more time
 
 - **`vehicleListButton` is location-dependent.** The test asserts at least one vehicle is rendered. It relies on `adb emu geo fix` succeeding and Berlin having available vehicles at run time. If Miles has zero vehicles in central Berlin during the run, the test fails legitimately — but to an outside reviewer it looks like a framework bug. Documented here so it's not surprising.
 - **`acceptCookies()` will fail the test if no popup appears.** The cookie click is not wrapped in `try-catch`. Right now the popup shows on every fresh session, so this is safe. If the app ever stops showing it (or `noReset=true` is set), the setup method throws and TestNG skips the whole suite.
-- **`findMeButton` has weak signal.** The find-me FAB just recenters the map; there is no new screen or text I could assert. `assertAppIsRunning` would pass even if the recenter silently failed. Acknowledged in the brief's *"click was accepted"* bar but worth flagging.
+- **`findMeButton` has weak signal.** The find-me FAB just recenters the map; there is no new screen or text I could assert. `assertAppIsRunning` would pass even if the recenter silently failed.
 
 ## What I'd change with another 4 hours
 
@@ -23,6 +23,7 @@ Trade-offs, scope decisions, known flakiness, and what I'd change with more time
 2. **Stop the cookie popup from appearing at all.** The popup comes from the Usercentrics SDK which stores consent in the app's data. With more time I would pre-write that consent value before each test starts, so the popup never shows. This removes the flakiness instead of working around it. The catch: it needs either a debug build of the app or a rooted device — neither is available when testing the Play Store APK, so it would require app-team cooperation first.
 3. **TestNG `IRetryAnalyzer` on `vehicleListButton`.** Single retry only, scoped to the test most affected by external state (vehicle availability). Avoids the *"retry everything"* anti-pattern.
 4. **Data-driven negative login with `@DataProvider`.** Right now there is only one negative login test using a single email/password pair from config. With more time I would expand it into a data-driven test using TestNG `@DataProvider` to cover multiple cases (invalid email format, empty inputs, long inputs, special characters) without duplicating the test method.
+5. **Mock backend for inventory-dependent tests.** Run a local proxy (Charles Proxy) returning canned responses for the `/vehicles` endpoint so `vehicleListButton` asserts against a known fixture instead of live Berlin inventory. Removes the location/availability flakiness called out above.
 
 ## AI tools used
 
