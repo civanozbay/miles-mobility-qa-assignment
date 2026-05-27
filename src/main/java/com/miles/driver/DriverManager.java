@@ -12,6 +12,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class DriverManager {
 
@@ -25,10 +26,12 @@ public class DriverManager {
     public static void startAppium() {
         try {
             URL appiumUrl = new URL(ConfigReader.getInstance().get("appium.url"));
+            File appiumLog = new File("target/appium.log");
+            appiumLog.delete();
             appiumService = new AppiumServiceBuilder()
                     .withIPAddress(appiumUrl.getHost())
                     .usingPort(appiumUrl.getPort())
-                    .withLogFile(new File("target/appium.log"))
+                    .withLogFile(appiumLog)
                     .build();
             appiumService.start();
             appiumService.clearOutPutStreams();
@@ -57,7 +60,14 @@ public class DriverManager {
             Process process = Runtime.getRuntime().exec(new String[]{
                     "adb", "-s", deviceName, "emu", "geo", "fix", String.valueOf(lon), String.valueOf(lat)
             });
-            process.waitFor();
+            boolean finished = process.waitFor(10, TimeUnit.SECONDS);
+            if (!finished) {
+                process.destroyForcibly();
+                throw new RuntimeException("adb geo fix timed out after 10s");
+            }
+            if (process.exitValue() != 0) {
+                throw new RuntimeException("adb geo fix failed with exit code " + process.exitValue());
+            }
             log.info("Device location mocked to ({}, {}) via adb", lat, lon);
         } catch (Exception e) {
             throw new RuntimeException("Failed to mock device location via adb", e);

@@ -67,7 +67,7 @@ mvn test -Dtest.email=foo@example.com -Dtest.password=whatever
 ## Configuration (`src/test/resources/config.properties`)
 
 | Key | Default | Purpose |
-|-----|---------|---------|
+|-----|---------|--------|
 | `appium.url` | `http://127.0.0.1:4723` | Embedded Appium server URL (host + port parsed from this) |
 | `platform.name` | `Android` | |
 | `automation.name` | `UiAutomator2` | |
@@ -79,7 +79,7 @@ mvn test -Dtest.email=foo@example.com -Dtest.password=whatever
 | `implicit.wait` | `2` | seconds |
 | `explicit.wait` | `15` | seconds — used by `WebDriverWait` |
 | `location.mock` | `true` | When `true`, runs `adb emu geo fix` after driver init |
-| `location.latitude` | `52.5200` | Berlin (Miles service area) |
+| `location.latitude` | `52.5200` | Berlin |
 | `location.longitude` | `13.4050` | |
 
 ## Running against a physical device
@@ -95,7 +95,7 @@ mvn test -Dtest.email=foo@example.com -Dtest.password=whatever
    device.name=<id from adb devices>
    location.mock=false
    ```
-   `adb emu geo fix` only works on emulators. On a real device the phone's actual GPS is used — make sure you're inside a Miles service area (Berlin, Hamburg, München, …) or the map will show "out of service area" and `vehicleListButton` will fail because no vehicles exist there.
+   `adb emu geo fix` only works on emulators. On a real device the phone's actual GPS is used — make sure you're inside a Miles service area or the map will show "out of service area".
 
 ## Reporting
 
